@@ -82,7 +82,7 @@ model Comment {
   message String
 
   blog_id String
-  product Blog   @relation(fields: [blog_id], references: [id])
+  blog    Blog   @relation(fields: [blog_id], references: [id])
 
   user_id String
   user    User   @relation(fields: [user_id], references: [id])
