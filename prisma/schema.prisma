@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum USER_ROLE {
+  user
+}
+
+model User {
+  id             String    @id @default(uuid())
+  name           String
+  email          String    @unique
+  password       String
+  role           USER_ROLE @default(user)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  comments Comment[]
+
+  @@map("users")
+}
+
+
+model Blog {
+  id String @id @default(uuid())
+
+  name         String
+  description  String
+  slug         String @unique
+
+  status       Boolean
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tags BlogTag[]
+  comments Comment[]
+
+  @@index([name])
+  @@index([slug])
+  @@map("blogs")
+}
+
+
+model Tag {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @default("")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  blogs BlogTag[]
+
+  @@map("tags")
+}
+
+
+
+
+model BlogTag {
+  blog_id String
+  tag_id     String
+
+  blog Blog @relation(fields: [blog_id], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+
+  @@id([blog_id, tag_id])
+  @@map("blog_tags")
+}
+
+model Comment {
+  id              String  @id @default(uuid())
+  message         String
+
+  blog_id String
+  product    Blog @relation(fields: [blog_id], references: [id])
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("comments")
+}
