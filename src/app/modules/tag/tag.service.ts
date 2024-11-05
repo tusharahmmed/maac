@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Prisma, Tag } from '@prisma/client';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -6,9 +5,7 @@ import prisma from '../../../shared/prisma';
 import { TAG_SEARCH_FIELDS } from './tag.constant';
 import { ITagFilters } from './tag.interface';
 
-const createTag = async (
-  payload: Pick<Tag, 'name' | 'description' | 'status'>,
-) => {
+const createTag = async (payload: Pick<Tag, 'name' | 'description'>) => {
   // insert data
   const result = await prisma.tag.create({
     data: {
@@ -28,11 +25,7 @@ const getAllTags = async (
     paginationHelpers.calculatePagination(options);
 
   // filters
-  const { searchTerm, ...filterData } = filters;
-
-  if (filterData.status) {
-    filterData.status = JSON.parse(filterData.status.toLowerCase());
-  }
+  const { searchTerm } = filters;
 
   const andConditions = [];
 
@@ -43,17 +36,6 @@ const getAllTags = async (
         [field]: {
           contains: searchTerm,
           mode: 'insensitive',
-        },
-      })),
-    });
-  }
-
-  // generate filter condition
-  if (Object.keys(filterData).length > 0) {
-    andConditions.push({
-      AND: Object.keys(filterData).map(key => ({
-        [key]: {
-          equals: (filterData as any)[key],
         },
       })),
     });

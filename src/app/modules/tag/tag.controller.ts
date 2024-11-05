@@ -8,9 +8,9 @@ import { TAG_FILTERS_FIELDS } from './tag.constant';
 import { TagService } from './tag.service';
 
 const createTag = catchAsync(async (req, res) => {
-  const payload = pick(req.body, ['name', 'description', 'status']) as Pick<
+  const payload = pick(req.body, ['name', 'description']) as Pick<
     Tag,
-    'name' | 'description' | 'status'
+    'name' | 'description'
   >;
 
   const result = await TagService.createTag(payload);
@@ -66,7 +66,7 @@ const deleteSingleTag = catchAsync(async (req, res) => {
 
 const updateTag = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const payload = pick(req.body, ['name', 'description', 'status']);
+  const payload = pick(req.body, ['name', 'description']);
 
   const result = await TagService.updateTag(id, payload);
 

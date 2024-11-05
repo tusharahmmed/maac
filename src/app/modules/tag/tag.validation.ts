@@ -9,8 +9,6 @@ const createTag = z.object({
       .string()
       .min(3, { message: 'description is too short' })
       .optional(),
-
-    status: z.boolean().optional(),
   }),
 });
 
@@ -21,8 +19,6 @@ const updateTag = z.object({
       .string()
       .min(3, { message: 'description is too short' })
       .optional(),
-
-    status: z.boolean().optional(),
   }),
 });
 
