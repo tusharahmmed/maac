@@ -17,17 +17,4 @@ export default {
     password_secrect: process.env.JWT_FORGET_PASSWORD_SECRET,
     password_expires_in: process.env.JWT_FORGET_PASSWORD_EXPIRES_IN,
   },
-  cloudinary: {
-    cloudName: process.env.CLOUDINARY_NAME,
-    apiKey: process.env.CLOUDINARY_API,
-    apiSecret: process.env.CLOUDINARY_SECRET,
-  },
-  provider: {
-    googleClientID: process.env.GOOGLE_CLIENT_ID,
-    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  },
-  node_mailer: {
-    email: process.env.NODEMAILER_GMAIL,
-    password: process.env.NODEMAILER_GMAIL_PASSWORD,
-  },
 };

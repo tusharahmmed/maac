@@ -20,7 +20,8 @@ CREATE TABLE "blogs" (
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
-    "status" BOOLEAN NOT NULL,
+    "status" BOOLEAN NOT NULL DEFAULT true,
+    "author_id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -69,6 +70,9 @@ CREATE INDEX "blogs_name_idx" ON "blogs"("name");
 
 -- CreateIndex
 CREATE INDEX "blogs_slug_idx" ON "blogs"("slug");
+
+-- AddForeignKey
+ALTER TABLE "blogs" ADD CONSTRAINT "blogs_author_id_fkey" FOREIGN KEY ("author_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "blog_tags" ADD CONSTRAINT "blog_tags_blog_id_fkey" FOREIGN KEY ("blog_id") REFERENCES "blogs"("id") ON DELETE CASCADE ON UPDATE CASCADE;

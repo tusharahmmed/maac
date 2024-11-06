@@ -20,7 +20,7 @@ app.use(
 //passport
 app.use(express.json());
 
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
 
 // root route
 app.get('/', (req: Request, res: Response) => {
